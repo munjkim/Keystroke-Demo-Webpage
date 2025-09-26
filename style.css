@@ -107,8 +107,8 @@ h1 {
   column-gap: 0.25rem;
   row-gap: 0.25rem;
   min-height: 2rem;
-  /* 대략 2줄 높이: bullet 0.6*2 + row-gap 0.25 + padding 0.75*2 = 3.9rem */
-  max-height: 3.9rem;
+  /* 대략 3줄 높이: bullet 0.6*3 + row-gap 0.25*2 + padding 0.75*2 = 5.3rem */
+  max-height: 5.3rem;
   padding: 0.75rem;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -116,6 +116,28 @@ h1 {
   overflow-y: auto;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
+  /* 스크롤바 스타일링 */
+  scrollbar-width: thin;
+  scrollbar-color: #ccc #f0f0f0;
+}
+
+/* Webkit 브라우저용 스크롤바 스타일 */
+#textInput::-webkit-scrollbar {
+  width: 8px;
+}
+
+#textInput::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+#textInput::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+#textInput::-webkit-scrollbar-thumb:hover {
+  background: #999;
 }
 
 #textInput:focus {
@@ -271,17 +293,43 @@ h1 {
 }
 
 /* 실시간 그래프 영역 */
-.chart-container {
+.charts-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 1200px;
   margin: 2rem auto;
-  height: 200px;
   text-align: center;
   padding: 0 1rem;
 }
-#keystrokeChart {
+
+.charts-container h2 {
+  margin-bottom: 1rem;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.chart-container {
+  height: 300px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  padding: 1rem;
+}
+
+.chart-container h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+#keystrokeChart,
+#analogChart {
   width: 100%;
-  height: 100%;
+  height: calc(100% - 2rem);
   display: block;
   margin: 0 auto;
 }
@@ -457,6 +505,13 @@ h1 {
   transition: background-color 0.1s, box-shadow 0.1s;
 }
 
+/* 디지털 활성 키 스타일 (border effect) */
+.key.digital-active {
+  outline: 3px solid #007bff;
+  outline-offset: 2px;
+  transition: outline 0.1s;
+}
+
 .key.analog-active::after {
   content: attr(data-depth);
   position: absolute;
@@ -486,7 +541,7 @@ h1 {
 @media (max-width: 768px) {
   .text-input-container,
   .keystroke-container,
-  .chart-container,
+  .charts-container,
   .analog-container,
   .analog-data {
     max-width: 95%;
@@ -494,9 +549,13 @@ h1 {
     margin-right: auto;
   }
   
-  .chart-container,
-  .analog-chart-container {
-    height: 150px;
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .chart-container {
+    height: 200px;
   }
   
   .input-with-toggle {

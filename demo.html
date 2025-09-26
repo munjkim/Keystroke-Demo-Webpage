@@ -1,114 +1,170 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>아날로그 키보드 시각화 데모</title>
+  <title>Analog Keyboard Visualization Demo</title>
   <link rel="stylesheet" href="style.css">
+  
+  <!-- Chart.js for real-time graph -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </head>
 <body>
-  <h1>아날로그 키보드 시각화 데모</h1>
+  <h1>Analog Keyboard Visualization Demo</h1>
   
-  <!-- 연결 컨트롤 -->
+  <!-- Connection Controls -->
   <div class="connection-controls">
     <button id="connectBtn" class="btn btn-primary">Connect</button>
-    <div id="connectionStatus" class="connection-status">연결되지 않음</div>
+    <div id="connectionStatus" class="connection-status">Not connected</div>
   </div>
 
-  <!-- 키보드 레이아웃 -->
+  <!-- Keyboard Layout -->
   <main class="keyboard-container">
-    <div class="keyboard" role="application" aria-label="아날로그 키보드 시각화">
+    <div class="keyboard" role="application" aria-label="Analog keyboard visualization">
       <!-- 1st row -->
       <div class="row">
-        <div class="key" data-code="Backquote" role="button" aria-label="백틱 키" tabindex="0">~<br>`</div>
-        <div class="key" data-code="Digit1" role="button" aria-label="숫자 1 키" tabindex="0">!<br>1</div>
-        <div class="key" data-code="Digit2" role="button" aria-label="숫자 2 키" tabindex="0">@<br>2</div>
-        <div class="key" data-code="Digit3" role="button" aria-label="숫자 3 키" tabindex="0">#<br>3</div>
-        <div class="key" data-code="Digit4" role="button" aria-label="숫자 4 키" tabindex="0">$<br>4</div>
-        <div class="key" data-code="Digit5" role="button" aria-label="숫자 5 키" tabindex="0">%<br>5</div>
-        <div class="key" data-code="Digit6" role="button" aria-label="숫자 6 키" tabindex="0">^<br>6</div>
-        <div class="key" data-code="Digit7" role="button" aria-label="숫자 7 키" tabindex="0">&<br>7</div>
-        <div class="key" data-code="Digit8" role="button" aria-label="숫자 8 키" tabindex="0">*<br>8</div>
-        <div class="key" data-code="Digit9" role="button" aria-label="숫자 9 키" tabindex="0">(<br>9</div>
-        <div class="key" data-code="Digit0" role="button" aria-label="숫자 0 키" tabindex="0">)<br>0</div>
-        <div class="key" data-code="Minus" role="button" aria-label="마이너스 키" tabindex="0">_<br>-</div>
-        <div class="key" data-code="Equal" role="button" aria-label="등호 키" tabindex="0">+<br>=</div>
-        <div class="key key--wide" data-code="Backspace" role="button" aria-label="백스페이스 키" tabindex="0">Backspace</div>
+        <div class="key" data-code="Backquote" role="button" aria-label="Backtick key" tabindex="0">~<br>`</div>
+        <div class="key" data-code="Digit1" role="button" aria-label="Number 1 key" tabindex="0">!<br>1</div>
+        <div class="key" data-code="Digit2" role="button" aria-label="Number 2 key" tabindex="0">@<br>2</div>
+        <div class="key" data-code="Digit3" role="button" aria-label="Number 3 key" tabindex="0">#<br>3</div>
+        <div class="key" data-code="Digit4" role="button" aria-label="Number 4 key" tabindex="0">$<br>4</div>
+        <div class="key" data-code="Digit5" role="button" aria-label="Number 5 key" tabindex="0">%<br>5</div>
+        <div class="key" data-code="Digit6" role="button" aria-label="Number 6 key" tabindex="0">^<br>6</div>
+        <div class="key" data-code="Digit7" role="button" aria-label="Number 7 key" tabindex="0">&<br>7</div>
+        <div class="key" data-code="Digit8" role="button" aria-label="Number 8 key" tabindex="0">*<br>8</div>
+        <div class="key" data-code="Digit9" role="button" aria-label="Number 9 key" tabindex="0">(<br>9</div>
+        <div class="key" data-code="Digit0" role="button" aria-label="Number 0 key" tabindex="0">)<br>0</div>
+        <div class="key" data-code="Minus" role="button" aria-label="Minus key" tabindex="0">_<br>-</div>
+        <div class="key" data-code="Equal" role="button" aria-label="Equal key" tabindex="0">+<br>=</div>
+        <div class="key key--wide" data-code="Backspace" role="button" aria-label="Backspace key" tabindex="0">Backspace</div>
       </div>
       <!-- 2nd row -->
       <div class="row">
-        <div class="key key--wide" data-code="Tab" role="button" aria-label="탭 키" tabindex="0">Tab</div>
-        <div class="key" data-code="KeyQ" role="button" aria-label="Q 키" tabindex="0">Q</div>
-        <div class="key" data-code="KeyW" role="button" aria-label="W 키" tabindex="0">W</div>
-        <div class="key" data-code="KeyE" role="button" aria-label="E 키" tabindex="0">E</div>
-        <div class="key" data-code="KeyR" role="button" aria-label="R 키" tabindex="0">R</div>
-        <div class="key" data-code="KeyT" role="button" aria-label="T 키" tabindex="0">T</div>
-        <div class="key" data-code="KeyY" role="button" aria-label="Y 키" tabindex="0">Y</div>
-        <div class="key" data-code="KeyU" role="button" aria-label="U 키" tabindex="0">U</div>
-        <div class="key" data-code="KeyI" role="button" aria-label="I 키" tabindex="0">I</div>
-        <div class="key" data-code="KeyO" role="button" aria-label="O 키" tabindex="0">O</div>
-        <div class="key" data-code="KeyP" role="button" aria-label="P 키" tabindex="0">P</div>
-        <div class="key" data-code="BracketLeft" role="button" aria-label="왼쪽 대괄호 키" tabindex="0">{<br>[</div>
-        <div class="key" data-code="BracketRight" role="button" aria-label="오른쪽 대괄호 키" tabindex="0">}<br>]</div>
-        <div class="key" data-code="Backslash" role="button" aria-label="백슬래시 키" tabindex="0">|<br>\</div>
+        <div class="key key--wide" data-code="Tab" role="button" aria-label="Tab key" tabindex="0">Tab</div>
+        <div class="key" data-code="KeyQ" role="button" aria-label="Q key" tabindex="0">Q</div>
+        <div class="key" data-code="KeyW" role="button" aria-label="W key" tabindex="0">W</div>
+        <div class="key" data-code="KeyE" role="button" aria-label="E key" tabindex="0">E</div>
+        <div class="key" data-code="KeyR" role="button" aria-label="R key" tabindex="0">R</div>
+        <div class="key" data-code="KeyT" role="button" aria-label="T key" tabindex="0">T</div>
+        <div class="key" data-code="KeyY" role="button" aria-label="Y key" tabindex="0">Y</div>
+        <div class="key" data-code="KeyU" role="button" aria-label="U key" tabindex="0">U</div>
+        <div class="key" data-code="KeyI" role="button" aria-label="I key" tabindex="0">I</div>
+        <div class="key" data-code="KeyO" role="button" aria-label="O key" tabindex="0">O</div>
+        <div class="key" data-code="KeyP" role="button" aria-label="P key" tabindex="0">P</div>
+        <div class="key" data-code="BracketLeft" role="button" aria-label="Left bracket key" tabindex="0">{<br>[</div>
+        <div class="key" data-code="BracketRight" role="button" aria-label="Right bracket key" tabindex="0">}<br>]</div>
+        <div class="key" data-code="Backslash" role="button" aria-label="Backslash key" tabindex="0">|<br>\</div>
       </div>
       <!-- 3rd row -->
       <div class="row">
-        <div class="key key--wide" data-code="CapsLock" role="button" aria-label="캡스락 키" tabindex="0">CapsLock</div>
-        <div class="key" data-code="KeyA" role="button" aria-label="A 키" tabindex="0">A</div>
-        <div class="key" data-code="KeyS" role="button" aria-label="S 키" tabindex="0">S</div>
-        <div class="key" data-code="KeyD" role="button" aria-label="D 키" tabindex="0">D</div>
-        <div class="key" data-code="KeyF" role="button" aria-label="F 키" tabindex="0">F</div>
-        <div class="key" data-code="KeyG" role="button" aria-label="G 키" tabindex="0">G</div>
-        <div class="key" data-code="KeyH" role="button" aria-label="H 키" tabindex="0">H</div>
-        <div class="key" data-code="KeyJ" role="button" aria-label="J 키" tabindex="0">J</div>
-        <div class="key" data-code="KeyK" role="button" aria-label="K 키" tabindex="0">K</div>
-        <div class="key" data-code="KeyL" role="button" aria-label="L 키" tabindex="0">L</div>
-        <div class="key" data-code="Semicolon" role="button" aria-label="세미콜론 키" tabindex="0">:<br>;</div>
-        <div class="key" data-code="Quote" role="button" aria-label="따옴표 키" tabindex="0">"<br>'</div>
-        <div class="key key--wide" data-code="Enter" role="button" aria-label="엔터 키" tabindex="0">Enter</div>
-      </div>
+        <div class="key key--wide" data-code="CapsLock" role="button" aria-label="Caps Lock key" tabindex="0">CapsLock</div>
+        <div class="key" data-code="KeyA" role="button" aria-label="A key" tabindex="0">A</div>
+        <div class="key" data-code="KeyS" role="button" aria-label="S key" tabindex="0">S</div>
+        <div class="key" data-code="KeyD" role="button" aria-label="D key" tabindex="0">D</div>
+        <div class="key" data-code="KeyF" role="button" aria-label="F key" tabindex="0">F</div>
+        <div class="key" data-code="KeyG" role="button" aria-label="G key" tabindex="0">G</div>
+        <div class="key" data-code="KeyH" role="button" aria-label="H key" tabindex="0">H</div>
+        <div class="key" data-code="KeyJ" role="button" aria-label="J key" tabindex="0">J</div>
+        <div class="key" data-code="KeyK" role="button" aria-label="K key" tabindex="0">K</div>
+        <div class="key" data-code="KeyL" role="button" aria-label="L key" tabindex="0">L</div>
+        <div class="key" data-code="Semicolon" role="button" aria-label="Semicolon key" tabindex="0">:<br>;</div>
+        <div class="key" data-code="Quote" role="button" aria-label="Quote key" tabindex="0">"<br>'</div>
+        <div class="key key--wide" data-code="Enter" role="button" aria-label="Enter key" tabindex="0">Enter</div>
+        </div>
       <!-- 4th row -->
       <div class="row">
-        <div class="key key--wide" data-code="ShiftLeft" role="button" aria-label="왼쪽 시프트 키" tabindex="0">Shift</div>
-        <div class="key" data-code="KeyZ" role="button" aria-label="Z 키" tabindex="0">Z</div>
-        <div class="key" data-code="KeyX" role="button" aria-label="X 키" tabindex="0">X</div>
-        <div class="key" data-code="KeyC" role="button" aria-label="C 키" tabindex="0">C</div>
-        <div class="key" data-code="KeyV" role="button" aria-label="V 키" tabindex="0">V</div>
-        <div class="key" data-code="KeyB" role="button" aria-label="B 키" tabindex="0">B</div>
-        <div class="key" data-code="KeyN" role="button" aria-label="N 키" tabindex="0">N</div>
-        <div class="key" data-code="KeyM" role="button" aria-label="M 키" tabindex="0">M</div>
-        <div class="key" data-code="Comma" role="button" aria-label="쉼표 키" tabindex="0">&lt;<br>,</div>
-        <div class="key" data-code="Period" role="button" aria-label="마침표 키" tabindex="0">&gt;<br>.</div>
-        <div class="key" data-code="Slash" role="button" aria-label="슬래시 키" tabindex="0">?<br>/</div>
-        <div class="key key--wide" data-code="ShiftRight" role="button" aria-label="오른쪽 시프트 키" tabindex="0">Shift</div>
-      </div>
+        <div class="key key--wide" data-code="ShiftLeft" role="button" aria-label="Left Shift key" tabindex="0">Shift</div>
+        <div class="key" data-code="KeyZ" role="button" aria-label="Z key" tabindex="0">Z</div>
+        <div class="key" data-code="KeyX" role="button" aria-label="X key" tabindex="0">X</div>
+        <div class="key" data-code="KeyC" role="button" aria-label="C key" tabindex="0">C</div>
+        <div class="key" data-code="KeyV" role="button" aria-label="V key" tabindex="0">V</div>
+        <div class="key" data-code="KeyB" role="button" aria-label="B key" tabindex="0">B</div>
+        <div class="key" data-code="KeyN" role="button" aria-label="N key" tabindex="0">N</div>
+        <div class="key" data-code="KeyM" role="button" aria-label="M key" tabindex="0">M</div>
+        <div class="key" data-code="Comma" role="button" aria-label="Comma key" tabindex="0">&lt;<br>,</div>
+        <div class="key" data-code="Period" role="button" aria-label="Period key" tabindex="0">&gt;<br>.</div>
+        <div class="key" data-code="Slash" role="button" aria-label="Slash key" tabindex="0">?<br>/</div>
+        <div class="key key--wide" data-code="ShiftRight" role="button" aria-label="Right Shift key" tabindex="0">Shift</div>
+        </div>
       <!-- 5th row -->
       <div class="row">
-        <div class="key key--space" data-code="Space" role="button" aria-label="스페이스바" tabindex="0">Space</div>
-      </div>
+        <div class="key key--space" data-code="Space" role="button" aria-label="Spacebar" tabindex="0">Space</div>
+        </div>
     </div>
   </main>
 
-  <!-- 아날로그 데이터 표시 -->
-  <section class="analog-data">
-    <h2>아날로그 입력 데이터</h2>
-    <div id="analogInfo" class="analog-info">
-      키를 눌러보세요. 아날로그 깊이가 실시간으로 표시됩니다.
+  <!-- Text Input Section -->
+  <section class="text-input-container">
+    <h2>Text Input (Press Enter to reset)</h2>
+    <div class="input-with-toggle">
+      <div id="textInput" 
+           role="textbox" 
+           aria-label="Text input area for keystroke visualization"
+           aria-multiline="true"
+           tabindex="0"></div>
+      <label class="container" for="showChars">
+        <input type="checkbox" id="showChars" aria-label="Toggle character visibility">
+        <svg class="eye" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"></path></svg>
+        <svg class="eye-slash" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c8.4-19.3 10.6-41.4 4.8-63.3c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zM373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5L373 389.9z"></path></svg>
+      </label>
     </div>
   </section>
 
-  <script src="AnalogSense.js"></script>
-  <script>
-    // 전역 변수
+  <!-- Real-time Graph Section -->
+  <section class="charts-container">
+    <h2>Keystroke Visualization (last 3s)</h2>
+    <div class="charts-grid">
+      <div class="chart-container">
+        <h3>Key On/Off States</h3>
+        <canvas id="keystrokeChart" 
+                role="img" 
+                aria-label="Real-time keystroke on/off visualization chart"></canvas>
+      </div>
+      <div class="chart-container">
+        <h3>Analog Depth Values</h3>
+        <canvas id="analogChart" 
+                role="img" 
+                aria-label="Real-time analog depth values visualization chart"></canvas>
+      </div>
+    </div>
+  </section>
+
+
+    <script src="AnalogSense.js"></script>
+    <script>
+    // Global variables
     let analogDevice = null;
     let animationFrameId = null;
-    let keyStates = new Map(); // 키 상태 저장
-    let keyElements = new Map(); // DOM 요소 캐시
+    let keyStates = new Map(); // Analog key states
+    let digitalKeyStates = new Map(); // Digital key states
+    let keyElements = new Map(); // DOM elements cache
+    let keyColors = {}; // Pre-computed color mapping for each key
     let lastUpdateTime = 0;
     const UPDATE_INTERVAL = 16; // ~60fps
+    
+    // Chart.js variables
+    let keystrokeChart = null;
+    let analogChart = null;
+    let chartData = new Map(); // Store chart data for each key (ON/OFF)
+    let analogChartData = new Map(); // Store analog chart data for each key
+    const CHART_DURATION = 3000; // 3 seconds
+    // Removed MAX_KEYS_DISPLAYED limit to show all keys
 
-    // scancode를 data-code로 매핑하는 함수
+    // Generate unique colors for all keys
+    function generateKeyColors(keys) {
+      const colors = {};
+      const total = keys.length;
+      keys.forEach((el, i) => {
+        const hue = Math.round((i * 360) / total);
+        colors[el.dataset.code] = `hsl(${hue}, 70%, 50%)`;
+      });
+      return colors;
+    }
+
+    // Scancode to data-code mapping
     function scancodeToDataCode(scancode) {
       const scancodeMap = {
         0x29: 'Escape',
@@ -137,7 +193,7 @@
       return scancodeMap[scancode] || null;
     }
 
-    // 색상 보간 함수 (0: 흰색, 1: 파란색)
+    // Color interpolation function (0: white, 1: blue)
     function interpolateColor(value) {
       const startColor = { r: 250, g: 250, b: 250 }; // #fafafa
       const endColor = { r: 13, g: 110, b: 253 };    // #0d6efd
@@ -149,25 +205,319 @@
       return `rgb(${r}, ${g}, ${b})`;
     }
 
-    // DOM 요소 캐시 초기화
+    // Initialize DOM elements cache and key colors
     function initializeKeyElementsCache() {
-      document.querySelectorAll('.key').forEach(keyElement => {
+      const keyElementsList = document.querySelectorAll('.key');
+      
+      // Initialize key elements cache
+      keyElementsList.forEach(keyElement => {
         const dataCode = keyElement.getAttribute('data-code');
         if (dataCode) {
           keyElements.set(dataCode, keyElement);
         }
       });
+      
+      // Generate and store key colors
+      keyColors = generateKeyColors(keyElementsList);
     }
 
-    // 키 시각화 업데이트 (성능 최적화)
-    function updateKeyVisualization() {
+    // Initialize Charts
+    function initializeCharts() {
+      // Register plugins
+      Chart.register(ChartDataLabels, ChartStreaming);
+      
+      // Initialize ON/OFF chart
+      const keystrokeCtx = document.getElementById('keystrokeChart').getContext('2d');
+      keystrokeChart = new Chart(keystrokeCtx, {
+        type: 'line',
+        data: {
+          datasets: []
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: false,
+          interaction: {
+            intersect: false,
+            mode: 'index'
+          },
+          hover: {
+            mode: null
+          },
+          onHover: null,
+          plugins: {
+            tooltip: {
+              enabled: false
+            },
+            datalabels: {
+              display: false
+            },
+            legend: {
+              display: true,
+              position: 'top'
+            }
+          },
+          scales: {
+            x: {
+              type: 'realtime',
+              realtime: {
+                duration: CHART_DURATION,
+                refresh: 100,
+                delay: 0,
+                pause: false,
+                ttl: undefined
+              },
+              title: { display: true, text: 'Time' }
+            },
+            y: {
+              min: -0.1,
+              max: 1.1,
+              ticks: { 
+                stepSize: 1,
+                callback: function(value) {
+                  return value === 1 ? 'ON' : value === 0 ? 'OFF' : '';
+                }
+              },
+              title: { display: true, text: 'State' }
+            }
+          },
+          elements: {
+            point: { radius: 0 },
+            line: { tension: 0, stepped: true }
+          }
+        }
+      });
+
+      // Initialize Analog Depth chart
+      const analogCtx = document.getElementById('analogChart').getContext('2d');
+      analogChart = new Chart(analogCtx, {
+        type: 'line',
+        data: {
+          datasets: []
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: false,
+          interaction: {
+            intersect: false,
+            mode: 'index'
+          },
+          hover: {
+            mode: null
+          },
+          onHover: null,
+          plugins: {
+            tooltip: {
+              enabled: false
+            },
+            datalabels: {
+              display: false
+            },
+            legend: {
+              display: true,
+              position: 'top'
+            }
+          },
+          scales: {
+            x: {
+              type: 'realtime',
+              realtime: {
+                duration: CHART_DURATION,
+                refresh: 100,
+                delay: 0,
+                pause: false,
+                ttl: undefined
+              },
+              title: { display: true, text: 'Time' }
+            },
+            y: {
+              min: 0,
+              max: 1,
+              ticks: { 
+                stepSize: 0.2,
+                callback: function(value) {
+                  return (value * 100).toFixed(0) + '%';
+                }
+              },
+              title: { display: true, text: 'Depth (0-1)' }
+            }
+          },
+          elements: {
+            point: { radius: 2 },
+            line: { tension: 0.1 }
+          }
+        }
+      });
+    }
+
+    // Add key to ON/OFF chart
+    function addKeyToChart(dataCode) {
+      if (chartData.has(dataCode)) {
+        return;
+      }
+
+      const color = keyColors[dataCode] || '#666666';
+      
+      const dataset = {
+        label: dataCode,
+        data: [],
+        borderColor: color,
+        backgroundColor: color,
+        pointRadius: 0,
+        stepped: true,
+        fill: false,
+        tension: 0
+      };
+      
+      keystrokeChart.data.datasets.push(dataset);
+      chartData.set(dataCode, dataset);
+      keystrokeChart.update('none');
+    }
+
+    // Add key to analog chart
+    function addKeyToAnalogChart(dataCode) {
+      if (analogChartData.has(dataCode)) {
+        return;
+      }
+
+      const color = keyColors[dataCode] || '#666666';
+      
+      const dataset = {
+        label: dataCode,
+        data: [],
+        borderColor: color,
+        backgroundColor: color + '20',
+        pointRadius: 2,
+        fill: false,
+        tension: 0.1
+      };
+      
+      analogChart.data.datasets.push(dataset);
+      analogChartData.set(dataCode, dataset);
+      analogChart.update('none');
+    }
+
+    // Update ON/OFF chart with key state
+    function updateChart(dataCode, isPressed) {
+      if (!chartData.has(dataCode)) {
+        addKeyToChart(dataCode);
+      }
+      
+      const dataset = chartData.get(dataCode);
+      if (dataset) {
+        const now = Date.now();
+        const value = isPressed ? 1 : 0;
+        
+        // Add new data point
+        dataset.data.push({
+          x: now,
+          y: value
+        });
+        
+        // Remove old data points
+        const cutoff = now - CHART_DURATION;
+        dataset.data = dataset.data.filter(point => point.x > cutoff);
+        
+        keystrokeChart.update('none');
+      }
+    }
+
+    // Update analog chart with depth value
+    function updateAnalogChart(dataCode, depth) {
+      if (!analogChartData.has(dataCode)) {
+        addKeyToAnalogChart(dataCode);
+      }
+      
+      const dataset = analogChartData.get(dataCode);
+      if (dataset) {
+        const now = Date.now();
+        
+        // Add new data point
+        dataset.data.push({
+          x: now,
+          y: depth
+        });
+        
+        // Remove old data points
+        const cutoff = now - CHART_DURATION;
+        dataset.data = dataset.data.filter(point => point.x > cutoff);
+        
+        analogChart.update('none');
+      }
+    }
+
+
+    // Update ON/OFF chart for inactive keys (set to 0)
+    function updateOnOffChartForInactiveKeys() {
+      // Only update inactive keys with 0 when analog device is NOT connected
+      if (analogDevice) {
+        return; // Don't show 0 for inactive keys when analog device is connected
+      }
+      
+      const now = Date.now();
+      const activeKeys = new Set();
+      
+      // Collect currently active keys (digital only when analog device is not connected)
+      digitalKeyStates.forEach((value, dataCode) => {
+        activeKeys.add(dataCode);
+      });
+      
+      // Update inactive keys with 0 value
+      chartData.forEach((dataset, dataCode) => {
+        if (!activeKeys.has(dataCode)) {
+          // Add 0 value for inactive keys to maintain graph continuity
+          dataset.data.push({
+            x: now,
+            y: 0
+          });
+          
+          // Remove old data points
+          const cutoff = now - CHART_DURATION;
+          dataset.data = dataset.data.filter(point => point.x > cutoff);
+        }
+      });
+      
+      keystrokeChart.update('none');
+    }
+
+    // Remove inactive keys from charts
+    function cleanupInactiveKeys() {
+      // Only clean up when analog device is disconnected
+      if (!analogDevice) {
+        // If analog device is disconnected, clear all analog chart data
+        analogChart.data.datasets = [];
+        analogChartData.clear();
+        analogChart.update('none');
+      }
+      
+      // For ON/OFF chart, we don't remove inactive keys to preserve graph history
+      // The chart will naturally show the last 3 seconds of data
+      // No need to update keystrokeChart here as it's handled by the streaming plugin
+    }
+
+    // Digital key visualization (border effect)
+    function updateDigitalKeyVisualization(dataCode, isPressed) {
+      const keyElement = keyElements.get(dataCode);
+      if (keyElement) {
+        if (isPressed) {
+          keyElement.classList.add('digital-active');
+          keyElement.setAttribute('aria-pressed', 'true');
+        } else {
+          keyElement.classList.remove('digital-active');
+          keyElement.setAttribute('aria-pressed', 'false');
+        }
+      }
+    }
+
+    // Analog key visualization (gradient color)
+    function updateAnalogKeyVisualization() {
       const currentTime = performance.now();
       if (currentTime - lastUpdateTime < UPDATE_INTERVAL) {
-        return; // 프레임 레이트 제한
+        return;
       }
       lastUpdateTime = currentTime;
 
-      // 현재 활성화된 키들의 data-code 집합
       const activeDataCodes = new Set();
       
       keyStates.forEach((value, scancode) => {
@@ -176,108 +526,166 @@
           activeDataCodes.add(dataCode);
           const keyElement = keyElements.get(dataCode);
           if (keyElement) {
-            if (value > 0.01) { // 임계값 이상일 때만 시각화
+            if (value > 0.01) {
+              // Use blue gradient based on depth (previous method)
               const color = interpolateColor(value);
               keyElement.style.backgroundColor = color;
               keyElement.style.color = value > 0.5 ? 'white' : 'black';
-              
-              // 깊이 값을 텍스트로 표시
               keyElement.setAttribute('data-depth', value.toFixed(2));
               keyElement.classList.add('analog-active');
               
-              // 접근성: aria-pressed 속성 업데이트
-              keyElement.setAttribute('aria-pressed', 'true');
+              // Update aria-label with pressure info
               const originalLabel = keyElement.getAttribute('aria-label').replace(/ \(.*\)$/, '');
               keyElement.setAttribute('aria-label', 
-                originalLabel + ` (압력: ${(value * 100).toFixed(1)}%)`);
+                originalLabel + ` (Pressure: ${(value * 100).toFixed(1)}%)`);
+              
+              // Update analog chart
+              updateAnalogChart(dataCode, value);
             } else {
-              // 값이 임계값 이하일 때 스타일 리셋
-              resetKeyElement(keyElement);
+              resetAnalogKeyElement(keyElement);
             }
           }
         }
       });
       
-      // 이전에 활성화되었지만 현재 비활성화된 키들 리셋
+      // Reset keys that are no longer active
       keyElements.forEach((keyElement, dataCode) => {
         if (!activeDataCodes.has(dataCode) && keyElement.classList.contains('analog-active')) {
-          resetKeyElement(keyElement);
+          resetAnalogKeyElement(keyElement);
         }
       });
+      
+      // Update ON/OFF chart for inactive keys (set to 0)
+      updateOnOffChartForInactiveKeys();
+      
+      // Clean up inactive keys from charts
+      cleanupInactiveKeys();
     }
 
-    // 키 요소 리셋 함수
-    function resetKeyElement(keyElement) {
+    // Reset analog key element
+    function resetAnalogKeyElement(keyElement) {
       keyElement.style.backgroundColor = '';
       keyElement.style.color = '';
       keyElement.removeAttribute('data-depth');
       keyElement.classList.remove('analog-active');
       
-      // 접근성: aria-pressed 속성 리셋
-      keyElement.setAttribute('aria-pressed', 'false');
+      // Reset aria-label
       const originalLabel = keyElement.getAttribute('aria-label').replace(/ \(.*\)$/, '');
       keyElement.setAttribute('aria-label', originalLabel);
     }
 
-    // 아날로그 데이터 정보 업데이트
-    function updateAnalogInfo(activeKeys) {
-      const infoElement = document.getElementById('analogInfo');
-      if (activeKeys.length > 0) {
-        const keyInfo = activeKeys.map(key => {
-          const dataCode = scancodeToDataCode(key.scancode);
-          const keyName = dataCode || `Scancode: 0x${key.scancode.toString(16)}`;
-          return `${keyName}: ${(key.value * 100).toFixed(1)}%`;
-        }).join(', ');
-        infoElement.textContent = `활성 키: ${keyInfo}`;
-      } else {
-        infoElement.textContent = '키를 눌러보세요. 아날로그 깊이가 실시간으로 표시됩니다.';
+
+    // Text input handling
+    function initializeTextInput() {
+      const textInput = document.getElementById('textInput');
+      const showChars = document.getElementById('showChars');
+      let textContent = '';
+
+      function updateTextDisplay() {
+        if (showChars.checked) {
+          textInput.innerHTML = textContent;
+        } else {
+          textInput.innerHTML = textContent.split('').map(() => '<span class="bullet">●</span>').join('');
+        }
+        
+        // Scroll to bottom to show latest content
+        textInput.scrollTop = textInput.scrollHeight;
       }
+
+      // Handle keyboard events
+      document.addEventListener('keydown', (event) => {
+        if (event.target === textInput || event.target === showChars) {
+          return; // Don't process if focus is on input elements
+        }
+
+        if (event.code === 'Enter') {
+          textContent = '';
+          updateTextDisplay();
+          return;
+        }
+
+        if (event.code === 'Backspace') {
+          textContent = textContent.slice(0, -1);
+        } else if (event.key.length === 1) {
+          textContent += event.key;
+        }
+
+        updateTextDisplay();
+      });
+
+      // Handle show/hide toggle
+      showChars.addEventListener('change', updateTextDisplay);
     }
 
-    // 연결 함수
+    // Digital keyboard event handling
+    function initializeDigitalKeyboard() {
+      document.addEventListener('keydown', (event) => {
+        if (event.target === document.getElementById('textInput') || 
+            event.target === document.getElementById('showChars')) {
+          return;
+        }
+
+        const dataCode = event.code;
+        if (!digitalKeyStates.has(dataCode)) {
+          digitalKeyStates.set(dataCode, true);
+          updateDigitalKeyVisualization(dataCode, true);
+          updateChart(dataCode, true);
+        }
+      });
+
+      document.addEventListener('keyup', (event) => {
+        if (event.target === document.getElementById('textInput') || 
+            event.target === document.getElementById('showChars')) {
+          return;
+        }
+
+        const dataCode = event.code;
+        if (digitalKeyStates.has(dataCode)) {
+          digitalKeyStates.delete(dataCode);
+          updateDigitalKeyVisualization(dataCode, false);
+          updateChart(dataCode, false);
+        }
+      });
+    }
+
+    // Connect analog device
     async function connectDevice() {
       try {
         const device = await analogsense.requestDevice();
         if (device) {
           analogDevice = device;
           document.getElementById('connectBtn').textContent = 'Disconnect';
-          document.getElementById('connectionStatus').textContent = `연결됨: ${device.getProductName()}`;
+          document.getElementById('connectionStatus').textContent = `Connected: ${device.getProductName()}`;
           document.getElementById('connectionStatus').className = 'connection-status connected';
           
-          // 아날로그 키 이벤트 리스너 시작
           device.startListening((activeKeys) => {
-            // 현재 활성 키들의 scancode 집합 생성
             const activeScancodes = new Set(activeKeys.map(key => key.scancode));
             
-            // 이전에 활성화되었지만 현재 비활성화된 키들 제거
+            // Remove inactive keys
             keyStates.forEach((value, scancode) => {
               if (!activeScancodes.has(scancode)) {
                 keyStates.delete(scancode);
               }
             });
             
-            // 새로운 활성 키들 추가/업데이트
+            // Update active keys
             activeKeys.forEach(key => {
               keyStates.set(key.scancode, key.value);
             });
-            
-            // 아날로그 정보 업데이트
-            updateAnalogInfo(activeKeys);
           });
           
-          // 애니메이션 프레임 시작
           if (animationFrameId) {
             cancelAnimationFrame(animationFrameId);
           }
           animate();
         }
       } catch (error) {
-        console.error('연결 실패:', error);
-        alert('디바이스 연결에 실패했습니다.');
+        console.error('Connection failed:', error);
+        alert('Failed to connect to device.');
       }
     }
 
-    // 연결 해제 함수
+    // Disconnect analog device
     function disconnectDevice() {
       if (analogDevice) {
         analogDevice.forget();
@@ -285,29 +693,30 @@
       }
       
       document.getElementById('connectBtn').textContent = 'Connect';
-      document.getElementById('connectionStatus').textContent = '연결되지 않음';
+      document.getElementById('connectionStatus').textContent = 'Not connected';
       document.getElementById('connectionStatus').className = 'connection-status';
       
-      // 키 상태 초기화
       keyStates.clear();
-      updateKeyVisualization();
+      updateAnalogKeyVisualization();
       
-      // 애니메이션 중지
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
       }
       
-      document.getElementById('analogInfo').textContent = '키를 눌러보세요. 아날로그 깊이가 실시간으로 표시됩니다.';
+      // Clean up charts when disconnecting
+      cleanupInactiveKeys();
     }
 
-    // 애니메이션 루프
+    // Animation loop
     function animate() {
-      updateKeyVisualization();
+      updateAnalogKeyVisualization();
+      // Also update ON/OFF chart for inactive keys
+      updateOnOffChartForInactiveKeys();
       animationFrameId = requestAnimationFrame(animate);
     }
 
-    // 이벤트 리스너
+    // Event listeners
     document.getElementById('connectBtn').addEventListener('click', () => {
       if (analogDevice) {
         disconnectDevice();
@@ -316,51 +725,47 @@
       }
     });
 
-    // WebHID 지원 확인
+    // WebHID support check
     if (!('hid' in navigator)) {
       document.getElementById('connectBtn').disabled = true;
-      document.getElementById('connectionStatus').textContent = 'WebHID를 지원하지 않는 브라우저입니다.';
+      document.getElementById('connectionStatus').textContent = 'WebHID is not supported in this browser.';
     }
 
-    // 기존 연결된 디바이스 확인
+    // Initialize everything on page load
     window.addEventListener('load', async () => {
-      // DOM 요소 캐시 초기화
       initializeKeyElementsCache();
+      initializeCharts();
+      initializeTextInput();
+      initializeDigitalKeyboard();
       
       try {
         const devices = await analogsense.getDevices();
         if (devices.length > 0) {
           analogDevice = devices[0];
           document.getElementById('connectBtn').textContent = 'Disconnect';
-          document.getElementById('connectionStatus').textContent = `연결됨: ${analogDevice.getProductName()}`;
+          document.getElementById('connectionStatus').textContent = `Connected: ${analogDevice.getProductName()}`;
           document.getElementById('connectionStatus').className = 'connection-status connected';
           
           analogDevice.startListening((activeKeys) => {
-            // 현재 활성 키들의 scancode 집합 생성
             const activeScancodes = new Set(activeKeys.map(key => key.scancode));
             
-            // 이전에 활성화되었지만 현재 비활성화된 키들 제거
             keyStates.forEach((value, scancode) => {
               if (!activeScancodes.has(scancode)) {
                 keyStates.delete(scancode);
               }
             });
             
-            // 새로운 활성 키들 추가/업데이트
             activeKeys.forEach(key => {
               keyStates.set(key.scancode, key.value);
             });
-            
-            updateAnalogInfo(activeKeys);
           });
           
           animate();
         }
       } catch (error) {
-        console.error('기존 디바이스 확인 실패:', error);
+        console.error('Failed to check existing devices:', error);
       }
     });
-  </script>
-
+    </script>
 </body>
 </html>
