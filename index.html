@@ -1,0 +1,180 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Keystroke Visualization</title>
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Chart.js core -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Date-Fns adapter for Chart.js v4 -->
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
+  <!-- DataLabels plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <!-- Streaming plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2"></script>
+  
+  <!-- Your visualization script -->
+  <script src="js/viz.js" defer></script>
+</head>
+<body>
+  <h1>Keystroke Visualization</h1>
+  <main class="keyboard-container">
+    <div class="keyboard">
+      <!-- 1st row -->
+      <div class="row">
+        <div class="key" data-code="Backquote">~<br>`</div>
+        <div class="key" data-code="Digit1">!<br>1</div>
+        <div class="key" data-code="Digit2">@<br>2</div>
+        <div class="key" data-code="Digit3">#<br>3</div>
+        <div class="key" data-code="Digit4">$<br>4</div>
+        <div class="key" data-code="Digit5">%<br>5</div>
+        <div class="key" data-code="Digit6">^<br>6</div>
+        <div class="key" data-code="Digit7">&<br>7</div>
+        <div class="key" data-code="Digit8">*<br>8</div>
+        <div class="key" data-code="Digit9">(<br>9</div>
+        <div class="key" data-code="Digit0">)<br>0</div>
+        <div class="key" data-code="Minus">_<br>-</div>
+        <div class="key" data-code="Equal">+<br>=</div>
+        <div class="key key--wide" data-code="Backspace">Backspace</div>
+      </div>
+      <!-- 2nd row -->
+      <div class="row">
+        <div class="key key--wide" data-code="Tab">Tab</div>
+        <div class="key" data-code="KeyQ">Q</div>
+        <div class="key" data-code="KeyW">W</div>
+        <div class="key" data-code="KeyE">E</div>
+        <div class="key" data-code="KeyR">R</div>
+        <div class="key" data-code="KeyT">T</div>
+        <div class="key" data-code="KeyY">Y</div>
+        <div class="key" data-code="KeyU">U</div>
+        <div class="key" data-code="KeyI">I</div>
+        <div class="key" data-code="KeyO">O</div>
+        <div class="key" data-code="KeyP">P</div>
+        <div class="key" data-code="BracketLeft">{<br>[</div>
+        <div class="key" data-code="BracketRight">}<br>]</div>
+        <div class="key" data-code="Backslash">|<br>\</div>
+      </div>
+      <!-- 3rd row -->
+      <div class="row">
+        <div class="key key--wide" data-code="CapsLock">CapsLock</div>
+        <div class="key" data-code="KeyA">A</div>
+        <div class="key" data-code="KeyS">S</div>
+        <div class="key" data-code="KeyD">D</div>
+        <div class="key" data-code="KeyF">F</div>
+        <div class="key" data-code="KeyG">G</div>
+        <div class="key" data-code="KeyH">H</div>
+        <div class="key" data-code="KeyJ">J</div>
+        <div class="key" data-code="KeyK">K</div>
+        <div class="key" data-code="KeyL">L</div>
+        <div class="key" data-code="Semicolon">:<br>;</div>
+        <div class="key" data-code="Quote">"<br>'</div>
+        <div class="key key--wide" data-code="Enter">Enter</div>
+      </div>
+      <!-- 4th row -->
+      <div class="row">
+        <div class="key key--wide" data-code="ShiftLeft">Shift</div>
+        <div class="key" data-code="KeyZ">Z</div>
+        <div class="key" data-code="KeyX">X</div>
+        <div class="key" data-code="KeyC">C</div>
+        <div class="key" data-code="KeyV">V</div>
+        <div class="key" data-code="KeyB">B</div>
+        <div class="key" data-code="KeyN">N</div>
+        <div class="key" data-code="KeyM">M</div>
+        <div class="key" data-code="Comma">&lt;<br>,</div>
+        <div class="key" data-code="Period">&gt;<br>.</div>
+        <div class="key" data-code="Slash">?<br>/</div>
+        <div class="key key--wide" data-code="ShiftRight">Shift</div>
+      </div>
+      <!-- 5th row -->
+      <div class="row">
+        <div class="key key--space" data-code="Space">Space</div>
+      </div>
+    </div>
+  </main>
+
+  <section class="text-input-container">
+    <h2>Text Input (Enter to reset)</h2>
+    <div class="input-with-toggle">
+      <div id="textInput" 
+           role="textbox" 
+           aria-label="Text input area for keystroke visualization"
+           aria-multiline="true"
+           tabindex="0"></div>
+      <label class="container" for="showChars">
+        <input type="checkbox" id="showChars" aria-label="Toggle character visibility">
+        <svg class="eye" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"></path></svg>
+        <svg class="eye-slash" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c8.4-19.3 10.6-41.4 4.8-63.3c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zM373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5L373 389.9z"></path></svg>
+      </label>
+    </div>
+  </section>
+
+  <section class="keystroke-container">
+    <h2>Keystrokes</h2>
+    <div class="keystroke-table-wrapper" role="region" aria-label="Keystroke log table">
+      <table id="keystrokeTable" role="table" aria-label="Real-time keystroke data">
+        <thead>
+          <tr>
+            <th>Unixtime</th>
+            <th>Key</th>
+            <th>KeyCode</th>
+            <th>Code</th>
+            <th>State</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 여기에 각 이벤트가 <tr>로 추가됩니다 -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+  <section class="chart-container">
+    <h2>Keystroke Graph (last 3s)<br></h2>
+    <canvas id="keystrokeChart" 
+            role="img" 
+            aria-label="Real-time keystroke visualization chart showing key press and release events over time"></canvas>
+  </section>
+
+  <section class="analog-container">
+    <h2>Analog Input Visualization</h2>
+    <div class="analog-controls">
+      <label>
+        <input type="checkbox" id="enableAnalog" checked>
+        Enable Analog Input Simulation
+      </label>
+      <div class="analog-info">
+        <span>Detecting Wooting analog keyboard with continuous depth values (0-1)</span>
+      </div>
+    </div>
+    
+    <div class="analog-chart-container">
+      <canvas id="analogChart" 
+              role="img" 
+              aria-label="Real-time analog input visualization showing key pressure levels over time"></canvas>
+    </div>
+    
+    <div class="analog-table-container">
+      <h3>Analog Input Data</h3>
+      <div class="analog-table-wrapper" role="region" aria-label="Analog input data table">
+        <table id="analogTable" role="table" aria-label="Real-time analog input data">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Key</th>
+              <th>Depth (0-1)</th>
+              <th>State</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 아날로그 데이터가 여기에 추가됩니다 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

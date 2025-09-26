@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>아날로그 키보드 시각화 데모</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>아날로그 키보드 시각화 데모</h1>
+  
+  <!-- 연결 컨트롤 -->
+  <div class="connection-controls">
+    <button id="connectBtn" class="btn btn-primary">Connect</button>
+    <div id="connectionStatus" class="connection-status">연결되지 않음</div>
+  </div>
+
+  <!-- 키보드 레이아웃 -->
+  <main class="keyboard-container">
+    <div class="keyboard" role="application" aria-label="아날로그 키보드 시각화">
+      <!-- 1st row -->
+      <div class="row">
+        <div class="key" data-code="Backquote" role="button" aria-label="백틱 키" tabindex="0">~<br>`</div>
+        <div class="key" data-code="Digit1" role="button" aria-label="숫자 1 키" tabindex="0">!<br>1</div>
+        <div class="key" data-code="Digit2" role="button" aria-label="숫자 2 키" tabindex="0">@<br>2</div>
+        <div class="key" data-code="Digit3" role="button" aria-label="숫자 3 키" tabindex="0">#<br>3</div>
+        <div class="key" data-code="Digit4" role="button" aria-label="숫자 4 키" tabindex="0">$<br>4</div>
+        <div class="key" data-code="Digit5" role="button" aria-label="숫자 5 키" tabindex="0">%<br>5</div>
+        <div class="key" data-code="Digit6" role="button" aria-label="숫자 6 키" tabindex="0">^<br>6</div>
+        <div class="key" data-code="Digit7" role="button" aria-label="숫자 7 키" tabindex="0">&<br>7</div>
+        <div class="key" data-code="Digit8" role="button" aria-label="숫자 8 키" tabindex="0">*<br>8</div>
+        <div class="key" data-code="Digit9" role="button" aria-label="숫자 9 키" tabindex="0">(<br>9</div>
+        <div class="key" data-code="Digit0" role="button" aria-label="숫자 0 키" tabindex="0">)<br>0</div>
+        <div class="key" data-code="Minus" role="button" aria-label="마이너스 키" tabindex="0">_<br>-</div>
+        <div class="key" data-code="Equal" role="button" aria-label="등호 키" tabindex="0">+<br>=</div>
+        <div class="key key--wide" data-code="Backspace" role="button" aria-label="백스페이스 키" tabindex="0">Backspace</div>
+      </div>
+      <!-- 2nd row -->
+      <div class="row">
+        <div class="key key--wide" data-code="Tab" role="button" aria-label="탭 키" tabindex="0">Tab</div>
+        <div class="key" data-code="KeyQ" role="button" aria-label="Q 키" tabindex="0">Q</div>
+        <div class="key" data-code="KeyW" role="button" aria-label="W 키" tabindex="0">W</div>
+        <div class="key" data-code="KeyE" role="button" aria-label="E 키" tabindex="0">E</div>
+        <div class="key" data-code="KeyR" role="button" aria-label="R 키" tabindex="0">R</div>
+        <div class="key" data-code="KeyT" role="button" aria-label="T 키" tabindex="0">T</div>
+        <div class="key" data-code="KeyY" role="button" aria-label="Y 키" tabindex="0">Y</div>
+        <div class="key" data-code="KeyU" role="button" aria-label="U 키" tabindex="0">U</div>
+        <div class="key" data-code="KeyI" role="button" aria-label="I 키" tabindex="0">I</div>
+        <div class="key" data-code="KeyO" role="button" aria-label="O 키" tabindex="0">O</div>
+        <div class="key" data-code="KeyP" role="button" aria-label="P 키" tabindex="0">P</div>
+        <div class="key" data-code="BracketLeft" role="button" aria-label="왼쪽 대괄호 키" tabindex="0">{<br>[</div>
+        <div class="key" data-code="BracketRight" role="button" aria-label="오른쪽 대괄호 키" tabindex="0">}<br>]</div>
+        <div class="key" data-code="Backslash" role="button" aria-label="백슬래시 키" tabindex="0">|<br>\</div>
+      </div>
+      <!-- 3rd row -->
+      <div class="row">
+        <div class="key key--wide" data-code="CapsLock" role="button" aria-label="캡스락 키" tabindex="0">CapsLock</div>
+        <div class="key" data-code="KeyA" role="button" aria-label="A 키" tabindex="0">A</div>
+        <div class="key" data-code="KeyS" role="button" aria-label="S 키" tabindex="0">S</div>
+        <div class="key" data-code="KeyD" role="button" aria-label="D 키" tabindex="0">D</div>
+        <div class="key" data-code="KeyF" role="button" aria-label="F 키" tabindex="0">F</div>
+        <div class="key" data-code="KeyG" role="button" aria-label="G 키" tabindex="0">G</div>
+        <div class="key" data-code="KeyH" role="button" aria-label="H 키" tabindex="0">H</div>
+        <div class="key" data-code="KeyJ" role="button" aria-label="J 키" tabindex="0">J</div>
+        <div class="key" data-code="KeyK" role="button" aria-label="K 키" tabindex="0">K</div>
+        <div class="key" data-code="KeyL" role="button" aria-label="L 키" tabindex="0">L</div>
+        <div class="key" data-code="Semicolon" role="button" aria-label="세미콜론 키" tabindex="0">:<br>;</div>
+        <div class="key" data-code="Quote" role="button" aria-label="따옴표 키" tabindex="0">"<br>'</div>
+        <div class="key key--wide" data-code="Enter" role="button" aria-label="엔터 키" tabindex="0">Enter</div>
+      </div>
+      <!-- 4th row -->
+      <div class="row">
+        <div class="key key--wide" data-code="ShiftLeft" role="button" aria-label="왼쪽 시프트 키" tabindex="0">Shift</div>
+        <div class="key" data-code="KeyZ" role="button" aria-label="Z 키" tabindex="0">Z</div>
+        <div class="key" data-code="KeyX" role="button" aria-label="X 키" tabindex="0">X</div>
+        <div class="key" data-code="KeyC" role="button" aria-label="C 키" tabindex="0">C</div>
+        <div class="key" data-code="KeyV" role="button" aria-label="V 키" tabindex="0">V</div>
+        <div class="key" data-code="KeyB" role="button" aria-label="B 키" tabindex="0">B</div>
+        <div class="key" data-code="KeyN" role="button" aria-label="N 키" tabindex="0">N</div>
+        <div class="key" data-code="KeyM" role="button" aria-label="M 키" tabindex="0">M</div>
+        <div class="key" data-code="Comma" role="button" aria-label="쉼표 키" tabindex="0">&lt;<br>,</div>
+        <div class="key" data-code="Period" role="button" aria-label="마침표 키" tabindex="0">&gt;<br>.</div>
+        <div class="key" data-code="Slash" role="button" aria-label="슬래시 키" tabindex="0">?<br>/</div>
+        <div class="key key--wide" data-code="ShiftRight" role="button" aria-label="오른쪽 시프트 키" tabindex="0">Shift</div>
+      </div>
+      <!-- 5th row -->
+      <div class="row">
+        <div class="key key--space" data-code="Space" role="button" aria-label="스페이스바" tabindex="0">Space</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 아날로그 데이터 표시 -->
+  <section class="analog-data">
+    <h2>아날로그 입력 데이터</h2>
+    <div id="analogInfo" class="analog-info">
+      키를 눌러보세요. 아날로그 깊이가 실시간으로 표시됩니다.
+    </div>
+  </section>
+
+  <script src="AnalogSense.js"></script>
+  <script>
+    // 전역 변수
+    let analogDevice = null;
+    let animationFrameId = null;
+    let keyStates = new Map(); // 키 상태 저장
+    let keyElements = new Map(); // DOM 요소 캐시
+    let lastUpdateTime = 0;
+    const UPDATE_INTERVAL = 16; // ~60fps
+
+    // scancode를 data-code로 매핑하는 함수
+    function scancodeToDataCode(scancode) {
+      const scancodeMap = {
+        0x29: 'Escape',
+        0x3A: 'F1', 0x3B: 'F2', 0x3C: 'F3', 0x3D: 'F4', 0x3E: 'F5', 0x3F: 'F6',
+        0x40: 'F7', 0x41: 'F8', 0x42: 'F9', 0x43: 'F10', 0x44: 'F11', 0x45: 'F12',
+        0x35: 'Backquote',
+        0x1E: 'Digit1', 0x1F: 'Digit2', 0x20: 'Digit3', 0x21: 'Digit4', 0x22: 'Digit5',
+        0x23: 'Digit6', 0x24: 'Digit7', 0x25: 'Digit8', 0x26: 'Digit9', 0x27: 'Digit0',
+        0x2D: 'Minus', 0x2E: 'Equal', 0x2A: 'Backspace',
+        0x2B: 'Tab',
+        0x14: 'KeyQ', 0x1A: 'KeyW', 0x08: 'KeyE', 0x15: 'KeyR', 0x17: 'KeyT',
+        0x1C: 'KeyY', 0x18: 'KeyU', 0x0C: 'KeyI', 0x12: 'KeyO', 0x13: 'KeyP',
+        0x2F: 'BracketLeft', 0x30: 'BracketRight', 0x28: 'Enter',
+        0x39: 'CapsLock',
+        0x04: 'KeyA', 0x16: 'KeyS', 0x07: 'KeyD', 0x09: 'KeyF', 0x0A: 'KeyG',
+        0x0B: 'KeyH', 0x0D: 'KeyJ', 0x0E: 'KeyK', 0x0F: 'KeyL',
+        0x33: 'Semicolon', 0x34: 'Quote', 0x31: 'Backslash',
+        0xE1: 'ShiftLeft', 0xE5: 'ShiftRight',
+        0x1D: 'KeyZ', 0x1B: 'KeyX', 0x06: 'KeyC', 0x19: 'KeyV', 0x05: 'KeyB',
+        0x11: 'KeyN', 0x10: 'KeyM', 0x36: 'Comma', 0x37: 'Period', 0x38: 'Slash',
+        0x2C: 'Space',
+        0xE0: 'ControlLeft', 0xE4: 'ControlRight',
+        0xE2: 'AltLeft', 0xE6: 'AltRight',
+        0xE3: 'MetaLeft', 0xE7: 'MetaRight'
+      };
+      return scancodeMap[scancode] || null;
+    }
+
+    // 색상 보간 함수 (0: 흰색, 1: 파란색)
+    function interpolateColor(value) {
+      const startColor = { r: 250, g: 250, b: 250 }; // #fafafa
+      const endColor = { r: 13, g: 110, b: 253 };    // #0d6efd
+      
+      const r = Math.round(startColor.r + (endColor.r - startColor.r) * value);
+      const g = Math.round(startColor.g + (endColor.g - startColor.g) * value);
+      const b = Math.round(startColor.b + (endColor.b - startColor.b) * value);
+      
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    // DOM 요소 캐시 초기화
+    function initializeKeyElementsCache() {
+      document.querySelectorAll('.key').forEach(keyElement => {
+        const dataCode = keyElement.getAttribute('data-code');
+        if (dataCode) {
+          keyElements.set(dataCode, keyElement);
+        }
+      });
+    }
+
+    // 키 시각화 업데이트 (성능 최적화)
+    function updateKeyVisualization() {
+      const currentTime = performance.now();
+      if (currentTime - lastUpdateTime < UPDATE_INTERVAL) {
+        return; // 프레임 레이트 제한
+      }
+      lastUpdateTime = currentTime;
+
+      // 현재 활성화된 키들의 data-code 집합
+      const activeDataCodes = new Set();
+      
+      keyStates.forEach((value, scancode) => {
+        const dataCode = scancodeToDataCode(scancode);
+        if (dataCode) {
+          activeDataCodes.add(dataCode);
+          const keyElement = keyElements.get(dataCode);
+          if (keyElement) {
+            if (value > 0.01) { // 임계값 이상일 때만 시각화
+              const color = interpolateColor(value);
+              keyElement.style.backgroundColor = color;
+              keyElement.style.color = value > 0.5 ? 'white' : 'black';
+              
+              // 깊이 값을 텍스트로 표시
+              keyElement.setAttribute('data-depth', value.toFixed(2));
+              keyElement.classList.add('analog-active');
+              
+              // 접근성: aria-pressed 속성 업데이트
+              keyElement.setAttribute('aria-pressed', 'true');
+              const originalLabel = keyElement.getAttribute('aria-label').replace(/ \(.*\)$/, '');
+              keyElement.setAttribute('aria-label', 
+                originalLabel + ` (압력: ${(value * 100).toFixed(1)}%)`);
+            } else {
+              // 값이 임계값 이하일 때 스타일 리셋
+              resetKeyElement(keyElement);
+            }
+          }
+        }
+      });
+      
+      // 이전에 활성화되었지만 현재 비활성화된 키들 리셋
+      keyElements.forEach((keyElement, dataCode) => {
+        if (!activeDataCodes.has(dataCode) && keyElement.classList.contains('analog-active')) {
+          resetKeyElement(keyElement);
+        }
+      });
+    }
+
+    // 키 요소 리셋 함수
+    function resetKeyElement(keyElement) {
+      keyElement.style.backgroundColor = '';
+      keyElement.style.color = '';
+      keyElement.removeAttribute('data-depth');
+      keyElement.classList.remove('analog-active');
+      
+      // 접근성: aria-pressed 속성 리셋
+      keyElement.setAttribute('aria-pressed', 'false');
+      const originalLabel = keyElement.getAttribute('aria-label').replace(/ \(.*\)$/, '');
+      keyElement.setAttribute('aria-label', originalLabel);
+    }
+
+    // 아날로그 데이터 정보 업데이트
+    function updateAnalogInfo(activeKeys) {
+      const infoElement = document.getElementById('analogInfo');
+      if (activeKeys.length > 0) {
+        const keyInfo = activeKeys.map(key => {
+          const dataCode = scancodeToDataCode(key.scancode);
+          const keyName = dataCode || `Scancode: 0x${key.scancode.toString(16)}`;
+          return `${keyName}: ${(key.value * 100).toFixed(1)}%`;
+        }).join(', ');
+        infoElement.textContent = `활성 키: ${keyInfo}`;
+      } else {
+        infoElement.textContent = '키를 눌러보세요. 아날로그 깊이가 실시간으로 표시됩니다.';
+      }
+    }
+
+    // 연결 함수
+    async function connectDevice() {
+      try {
+        const device = await analogsense.requestDevice();
+        if (device) {
+          analogDevice = device;
+          document.getElementById('connectBtn').textContent = 'Disconnect';
+          document.getElementById('connectionStatus').textContent = `연결됨: ${device.getProductName()}`;
+          document.getElementById('connectionStatus').className = 'connection-status connected';
+          
+          // 아날로그 키 이벤트 리스너 시작
+          device.startListening((activeKeys) => {
+            // 현재 활성 키들의 scancode 집합 생성
+            const activeScancodes = new Set(activeKeys.map(key => key.scancode));
+            
+            // 이전에 활성화되었지만 현재 비활성화된 키들 제거
+            keyStates.forEach((value, scancode) => {
+              if (!activeScancodes.has(scancode)) {
+                keyStates.delete(scancode);
+              }
+            });
+            
+            // 새로운 활성 키들 추가/업데이트
+            activeKeys.forEach(key => {
+              keyStates.set(key.scancode, key.value);
+            });
+            
+            // 아날로그 정보 업데이트
+            updateAnalogInfo(activeKeys);
+          });
+          
+          // 애니메이션 프레임 시작
+          if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+          }
+          animate();
+        }
+      } catch (error) {
+        console.error('연결 실패:', error);
+        alert('디바이스 연결에 실패했습니다.');
+      }
+    }
+
+    // 연결 해제 함수
+    function disconnectDevice() {
+      if (analogDevice) {
+        analogDevice.forget();
+        analogDevice = null;
+      }
+      
+      document.getElementById('connectBtn').textContent = 'Connect';
+      document.getElementById('connectionStatus').textContent = '연결되지 않음';
+      document.getElementById('connectionStatus').className = 'connection-status';
+      
+      // 키 상태 초기화
+      keyStates.clear();
+      updateKeyVisualization();
+      
+      // 애니메이션 중지
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+      
+      document.getElementById('analogInfo').textContent = '키를 눌러보세요. 아날로그 깊이가 실시간으로 표시됩니다.';
+    }
+
+    // 애니메이션 루프
+    function animate() {
+      updateKeyVisualization();
+      animationFrameId = requestAnimationFrame(animate);
+    }
+
+    // 이벤트 리스너
+    document.getElementById('connectBtn').addEventListener('click', () => {
+      if (analogDevice) {
+        disconnectDevice();
+      } else {
+        connectDevice();
+      }
+    });
+
+    // WebHID 지원 확인
+    if (!('hid' in navigator)) {
+      document.getElementById('connectBtn').disabled = true;
+      document.getElementById('connectionStatus').textContent = 'WebHID를 지원하지 않는 브라우저입니다.';
+    }
+
+    // 기존 연결된 디바이스 확인
+    window.addEventListener('load', async () => {
+      // DOM 요소 캐시 초기화
+      initializeKeyElementsCache();
+      
+      try {
+        const devices = await analogsense.getDevices();
+        if (devices.length > 0) {
+          analogDevice = devices[0];
+          document.getElementById('connectBtn').textContent = 'Disconnect';
+          document.getElementById('connectionStatus').textContent = `연결됨: ${analogDevice.getProductName()}`;
+          document.getElementById('connectionStatus').className = 'connection-status connected';
+          
+          analogDevice.startListening((activeKeys) => {
+            // 현재 활성 키들의 scancode 집합 생성
+            const activeScancodes = new Set(activeKeys.map(key => key.scancode));
+            
+            // 이전에 활성화되었지만 현재 비활성화된 키들 제거
+            keyStates.forEach((value, scancode) => {
+              if (!activeScancodes.has(scancode)) {
+                keyStates.delete(scancode);
+              }
+            });
+            
+            // 새로운 활성 키들 추가/업데이트
+            activeKeys.forEach(key => {
+              keyStates.set(key.scancode, key.value);
+            });
+            
+            updateAnalogInfo(activeKeys);
+          });
+          
+          animate();
+        }
+      } catch (error) {
+        console.error('기존 디바이스 확인 실패:', error);
+      }
+    });
+  </script>
+
+</body>
+</html>

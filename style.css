@@ -1,0 +1,520 @@
+:root {
+  --key-size: 50px;
+  --key-gap: 6px;
+  --key-radius: 6px;
+  --kb-padding: 8px;
+  --kb-bg: #ddd;
+  --key-bg: #fafafa;
+  --key-border: #aaa;
+  --key-shadow: rgba(0,0,0,0.15);
+}
+
+body {
+  font-family: sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 1rem;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+/* 키보드 시각화 */
+.keyboard {
+  display: inline-block;
+  background: var(--kb-bg);
+  padding: var(--kb-padding);
+  border-radius: calc(var(--key-radius) * 1.5);
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  gap: var(--key-gap);
+  margin-bottom: var(--key-gap);
+}
+
+.key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--key-size);
+  height: var(--key-size);
+  background: var(--key-bg);
+  border: 1px solid var(--key-border);
+  border-radius: var(--key-radius);
+  box-shadow: 0 2px 4px var(--key-shadow);
+  user-select: none;
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  cursor: default;
+  transition: background 0.1s, box-shadow 0.1s, transform 0.1s;
+}
+
+.key.active {
+  background: #ffe082;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+  transform: translateY(2px);
+}
+
+.key--wide {
+  width: calc(var(--key-size) * 1.5 + var(--key-gap));
+}
+
+.key--space {
+  width: calc(var(--key-size) * 8 + var(--key-gap) * 7);
+}
+
+/* CapsLock, Enter, Shift 키를 두 칸 폭으로 */
+.key[data-code="CapsLock"],
+.key[data-code="Enter"],
+.key[data-code="ShiftLeft"],
+.key[data-code="ShiftRight"] {
+  width: calc(var(--key-size) * 2 + var(--key-gap));
+}
+
+/* Text Input 섹션 레이아웃 */
+.text-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 600px;
+  margin: 2rem auto 0;
+  text-align: left;
+}
+.text-input-container h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+/* 입력 필드 + 토글 아이콘을 한 줄에 배치 */
+.input-with-toggle {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+/* Text Input bullets 영역 */
+#textInput {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: flex-start;
+  column-gap: 0.25rem;
+  row-gap: 0.25rem;
+  min-height: 2rem;
+  /* 대략 2줄 높이: bullet 0.6*2 + row-gap 0.25 + padding 0.75*2 = 3.9rem */
+  max-height: 3.9rem;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  overflow-y: auto;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#textInput:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* ● 모양 */
+.bullet {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  line-height: 0.6rem;
+  text-align: center;
+  border-radius: 50%;
+  background: #444;
+  color: transparent;
+  cursor: default;
+  user-select: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* Show Characters 시 문자만 표시 */
+.bullet.revealed {
+  width: auto;
+  height: auto;
+  line-height: normal;
+  border-radius: 0;
+  background: none;
+  color: #000;
+  padding: 0;
+  box-shadow: none;
+}
+
+/* 커서 깜빡임 애니메이션 */
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75%     { opacity: 0; }
+}
+
+/* 커서 스타일 */
+#cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;            /* 글자 높이보다 살짝 큼 */
+  background: #007bff;
+  vertical-align: text-bottom;
+  margin-left: 0;           /* 바로 붙도록 */
+  animation: blink 2s step-end infinite;
+}
+
+/* 입력 중(solid) 상태: 깜빡임 중지 */
+#cursor.solid {
+  animation: none;
+  opacity: 1;
+}
+
+/* From Uiverse.io by catraco */
+/*------ Settings ------*/
+.container {
+  --color: #a5a5b0;
+  --size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: var(--size);
+  user-select: none;
+  fill: var(--color);
+}
+
+.container .eye,
+.container .eye-slash {
+  position: absolute;
+  animation: keyframes-fill .5s;
+}
+
+.container .eye-slash {
+  display: none;
+}
+
+/* 초기 상태 (unchecked -> hide characters) */
+.container input:not(:checked) ~ .eye {
+  display: none;
+}
+.container input:not(:checked) ~ .eye-slash {
+  display: block;
+}
+
+/* 체크된 상태 (checked -> show characters) */
+.container input:checked ~ .eye {
+  display: block;
+}
+.container input:checked ~ .eye-slash {
+  display: none;
+}
+
+/* Hide the default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Animation */
+@keyframes keyframes-fill {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+}
+
+/* Keystroke 로그 영역 */
+.keystroke-container {
+  margin-top: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+.keystroke-container h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+/* Keystroke Table 스타일 */
+.keystroke-table-wrapper {
+  max-height: 8rem;         /* 원하는 높이만큼 고정 */
+  overflow-y: auto;         /* 넘치면 스크롤 */
+  margin-top: 0.5rem;
+}
+#keystrokeTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: monospace;
+  border: 1px solid #ccc;
+}
+#keystrokeTable th,
+#keystrokeTable td {
+  border: 1px solid #ccc;
+  padding: 0.25rem 0.5rem;
+  text-align: left;
+}
+#keystrokeTable thead {
+  background: #f0f0f0;
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid #ccc;
+}
+#keystrokeTable thead tr:first-child th {
+  border-top: 1px solid #ccc;
+}
+
+/* 실시간 그래프 영역 */
+.chart-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 2rem auto;
+  height: 200px;
+  text-align: center;
+  padding: 0 1rem;
+}
+#keystrokeChart {
+  width: 100%;
+  height: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+/* 아날로그 입력 시각화 */
+.analog-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.analog-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.analog-controls label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.analog-info {
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+}
+
+.analog-chart-container {
+  width: 100%;
+  height: 250px;
+  margin: 1rem 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+}
+
+#analogChart {
+  width: 100%;
+  height: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.analog-table-container {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.analog-table-container h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.analog-table-wrapper {
+  max-height: 8rem;
+  overflow-y: auto;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#analogTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+#analogTable th,
+#analogTable td {
+  border: 1px solid #ccc;
+  padding: 0.25rem 0.5rem;
+  text-align: left;
+}
+
+#analogTable thead {
+  background: #e3f2fd;
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid #ccc;
+}
+
+#analogTable thead tr:first-child th {
+  border-top: 1px solid #ccc;
+}
+
+/* 압력 수준에 따른 색상 */
+.pressure-low { color: #4caf50; }
+.pressure-medium { color: #ff9800; }
+.pressure-high { color: #f44336; }
+
+/* 아날로그 키보드 시각화 스타일 */
+.connection-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-primary:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.connection-status {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #6c757d;
+}
+
+.connection-status.connected {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+/* 아날로그 데이터 섹션 */
+.analog-data {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.analog-data h2 {
+  margin-bottom: 1rem;
+}
+
+.analog-info {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-family: monospace;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* 아날로그 활성 키 스타일 */
+.key.analog-active {
+  position: relative;
+  box-shadow: 0 0 10px rgba(13, 110, 253, 0.5);
+  transition: background-color 0.1s, box-shadow 0.1s;
+}
+
+.key.analog-active::after {
+  content: attr(data-depth);
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  font-size: 0.6rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 1px 3px;
+  border-radius: 2px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* 접근성 개선 */
+.key[aria-pressed="true"] {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* 성능 최적화를 위한 will-change */
+.key {
+  will-change: background-color, box-shadow, transform;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .text-input-container,
+  .keystroke-container,
+  .chart-container,
+  .analog-container,
+  .analog-data {
+    max-width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .chart-container,
+  .analog-chart-container {
+    height: 150px;
+  }
+  
+  .input-with-toggle {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .analog-controls {
+    padding: 0.75rem;
+  }
+
+  .connection-controls {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .analog-info {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+  }
+}
